@@ -15,6 +15,7 @@ public class Solution {
                 j++;
                 max = Math.max(max, set.size());
             } else {
+                //remove char with LRU
                 set.remove(s.charAt(i));
                 i++;
             }
