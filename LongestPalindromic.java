@@ -46,3 +46,64 @@ private String longestPalindrome(String s) {
     }
     return s.substring(start, end);
 }
+
+/**
+ * Manacher's ALGORITHM: O(n)
+ * blog http://blog.csdn.net/hlglinglong/article/details/49493895
+ */
+
+public class Solution{
+    public String getManacherString(String str){
+        StringBuilder sb=new StringBuilder("$");
+        int n=str.length();
+        for(int i=0;i<n;i++){
+            sb.append("#").append(str.charAt(i));
+        }
+        sb.append("#");
+        return sb.toString();
+    }
+    public String longestPalindrome(String s){
+        String newStr=getManacherString(s);
+        int len=newStr.length();
+        int[] radiusArray=new int[len];
+        int end=0;
+        int index=0;
+        int maxLen=0;
+        int maxIndex=0;
+        for(int i=1;i<len;i++){
+            if(end>i){
+                radiusArray[i]=Math.min(radiusArray[2*index-i], end-i);
+            }else{
+                radiusArray[i]=1;
+            }
+            while(i+radiusArray[i]<len&&i-radiusArray[i]>=1){
+                if(newStr.charAt(i+radiusArray[i])==newStr.charAt(i-radiusArray[i])){
+                    radiusArray[i]++;
+                }else{
+                    break;
+                }
+            }
+            if(radiusArray[i]+i>end){
+                end=radiusArray[i]+i;
+                index=i;
+            }
+            if(radiusArray[i]>maxLen){
+                maxLen=radiusArray[i];
+                maxIndex=i;
+            }
+        }
+        StringBuilder sb=new StringBuilder();
+        for(int i=maxIndex-maxLen+1;i<maxIndex;i++){
+            if(newStr.charAt(i)!='#'){
+                sb.append(newStr.charAt(i));
+            }
+        }
+        String resultStr=sb.toString();
+        if(newStr.charAt(maxIndex)!='#'){
+            resultStr+=newStr.charAt(maxIndex);
+        }
+        resultStr+=sb.reverse().toString();
+        return resultStr;
+    }
+
+}
