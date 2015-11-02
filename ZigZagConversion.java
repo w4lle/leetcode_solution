@@ -36,3 +36,19 @@ public class Solution {
         return ret;  
     }
 }
+
+
+
+Run Code Result: 
+
+Your input
+
+"adfadsfadf"
+4
+Your answer
+
+"afdsafddaf"
+Expected answer
+
+"afdsafddaf"
+Runtime: 1 ms
